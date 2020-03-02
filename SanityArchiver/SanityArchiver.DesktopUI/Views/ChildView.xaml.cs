@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SanityArchiver.DesktopUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,9 @@ namespace SanityArchiver.DesktopUI.Views
     {
         public ChildView()
         {
+            var itemProvider = new ItemProvider();
+            var items = itemProvider.GetItems(@"C:\");
+            DataContext = items;
             InitializeComponent();
         }
     }

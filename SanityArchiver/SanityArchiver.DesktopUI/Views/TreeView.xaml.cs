@@ -1,5 +1,8 @@
-﻿using System;
+﻿using SanityArchiver.DesktopUI.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +23,13 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class TreeView : UserControl
     {
+
         public TreeView()
         {
             InitializeComponent();
+            var itemProvider = new TreeViewProvider();
+            var items = itemProvider.GetItems();
+            CustomTreeview.DataContext = items;
         }
     }
 }

@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\ItemProvider.cs" />
+    <Compile Include="ViewModels\TreeViewProvider.cs" />
     <Compile Include="Views\ChildView.xaml.cs">
       <DependentUpon>ChildView.xaml</DependentUpon>
     </Compile>
@@ -118,7 +120,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="ReadMe.md" />
-    <None Include="ViewModels\ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
