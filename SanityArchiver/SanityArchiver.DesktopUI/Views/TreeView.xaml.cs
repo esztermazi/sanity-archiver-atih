@@ -26,10 +26,15 @@ namespace SanityArchiver.DesktopUI.Views
 
         public TreeView()
         {
+            
+
             InitializeComponent();
-            var itemProvider = new TreeViewProvider();
-            var items = itemProvider.GetItems();
-            CustomTreeview.DataContext = items;
+            var itemProvider = new DriverController();
+            foreach (var item in itemProvider.Drivers)
+            {
+                trvMenu.Items.Add(item);
+
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ using SanityArchiver.Application.Models;
 
 namespace SanityArchiver.DesktopUI.ViewModels
 {
-    public class ItemProvider
+    public class DirectoryController
     {
         public ObservableCollection<CustomItem> GetItems(string path)
         {
@@ -31,25 +31,25 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     System.Console.WriteLine("Got Exception");
                 }
 
-                foreach (var file in dirInfo.GetFiles())
-                {
-                    try
-                    {
-                        var item = new CustomFile
-                        {
-                            Name = file.Name,
-                            DateModified = file.LastWriteTime,
-                            Type = file.GetType().ToString(),
-                            Size = 0,
-                        };
+                //foreach (var file in dirinfo.getfiles())
+                //{
+                //    try
+                //    {
+                //        var item = new customfile
+                //        {
+                //            name = file.name,
+                //            datemodified = file.lastwritetime,
+                //            type = file.gettype().tostring(),
+                //            size = 0,
+                //        };
 
-                        items.Add(item);
-                    }
-                    catch (System.UnauthorizedAccessException)
-                    {
-                        System.Console.WriteLine("Got Exception");
-                    }
-                }
+                //        items.add(item);
+                //    }
+                //    catch (system.unauthorizedaccessexception)
+                //    {
+                //        system.console.writeline("got exception");
+                //    }
+                //}
             }
             return items;
         }
