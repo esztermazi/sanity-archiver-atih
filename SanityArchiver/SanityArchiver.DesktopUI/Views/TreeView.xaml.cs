@@ -23,18 +23,20 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class TreeView : UserControl
     {
+        private DriverController dc = new DriverController();
 
         public TreeView()
         {
-            
-
             InitializeComponent();
-            var itemProvider = new DriverController();
-            foreach (var item in itemProvider.Drivers)
+            foreach (var item in dc.Drivers)
             {
                 trvMenu.Items.Add(item);
-
             }
+        }
+
+        private void trvMenu_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            MessageBox.Show("lol");
         }
     }
 }
