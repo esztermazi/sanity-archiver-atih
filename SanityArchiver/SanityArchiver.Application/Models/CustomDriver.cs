@@ -9,15 +9,9 @@ namespace SanityArchiver.Application.Models
 {
     public class CustomDriver : CustomItem
     {
-		private ObservableCollection<CustomDirectory> _directories;
+        public ObservableCollection<CustomDirectory> Items { get; set; }
 
-		public ObservableCollection<CustomDirectory> Items
-		{
-			get { return _directories; }
-			set { _directories = value; }
-		}
-
-		public CustomDriver()
+        public CustomDriver()
 		{
 			Items = new ObservableCollection<CustomDirectory>();
 		}

@@ -22,7 +22,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
                 {
                     var dir = new CustomDirectory
                     {
-                        Name = directory.Name,
+                        Name = directory.FullName,
                         DateModified = directory.LastWriteTime,
                         Type = directory.GetType().ToString(),
                         Size = 0,

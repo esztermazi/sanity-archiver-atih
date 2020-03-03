@@ -32,12 +32,26 @@ namespace SanityArchiver.DesktopUI.Views
         private void OnExpanded(object sender, RoutedEventArgs e)
         {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            CustomDriver driver = (CustomDriver)source.Header;
-            foreach (var dir in driver.Items)
+
+            try
             {
-                CustomItemController = new CustomItemController() {CustomDirectory = dir};
-                CustomItemController.GetCustomDirectories(dir.Name);
+                CustomDriver sourceItem = (CustomDriver)source.Header;
+                foreach (var dir in sourceItem.Items)
+                {
+                    CustomItemController = new CustomItemController() { CustomDirectory = dir };
+                    CustomItemController.GetCustomDirectories(dir.Name);
+                }
             }
+            catch (System.InvalidCastException)
+            {
+                CustomDirectory sourceItem = (CustomDirectory)source.Header;
+                foreach (var dir in sourceItem.Items)
+                {
+                    CustomItemController = new CustomItemController() { CustomDirectory = dir };
+                    CustomItemController.GetCustomDirectories(dir.Name);
+                }
+            }
+            
 
         }
     }
