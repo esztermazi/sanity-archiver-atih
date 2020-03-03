@@ -5,26 +5,29 @@ using SanityArchiver.Application.Models;
 
 namespace SanityArchiver.DesktopUI.ViewModels
 {
-    public class DirectoryController
+    public class CustomItemController
     {
-        public ObservableCollection<CustomItem> GetItems(string path)
+        public CustomDirectory CustomDirectory { get; set; }
+
+        public void GetCustomDirectories(string path)
         {
-            var items = new ObservableCollection<CustomItem>();
+            var items = new ObservableCollection<CustomDirectory>();
 
-            var dirInfo = new DirectoryInfo(path);
+            var dirinfo = new DirectoryInfo(path);
 
-            foreach (var directory in dirInfo.GetDirectories())
+            foreach (var directory in dirinfo.GetDirectories())
             {
                 try
                 {
-                    var item = new CustomDirectory
+                    var dir = new CustomDirectory
                     {
                         Name = directory.Name,
                         DateModified = directory.LastWriteTime,
                         Type = directory.GetType().ToString(),
                         Size = 0,
                     };
-                    items.Add(item);
+
+                    CustomDirectory.Items.Add(dir);
                 }
                 catch (System.UnauthorizedAccessException)
                 {
@@ -51,7 +54,6 @@ namespace SanityArchiver.DesktopUI.ViewModels
                 //    }
                 //}
             }
-            return items;
         }
     }
 }
