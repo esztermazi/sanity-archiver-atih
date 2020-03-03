@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+﻿using Hangfire.Annotations;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

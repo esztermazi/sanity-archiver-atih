@@ -28,8 +28,7 @@ namespace SanityArchiver.DesktopUI.Views
         {
             InitializeComponent();
             var itemProvider = new TreeViewProvider();
-            var items = itemProvider.GetItems();
-            CustomTreeview.DataContext = items;
+            DataContext = itemProvider.GetItems();
         }
     }
 }

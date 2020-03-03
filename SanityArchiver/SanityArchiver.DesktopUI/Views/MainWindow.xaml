@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="Sanity Archiver" Height="450" Width="800">
     <DockPanel>
-
         <Grid DockPanel.Dock="Top">
             <local:MenuView x:Name="ctrMenuView"/>
         </Grid>
