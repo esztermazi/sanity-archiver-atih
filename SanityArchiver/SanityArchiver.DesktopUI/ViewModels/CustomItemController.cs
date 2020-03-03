@@ -23,6 +23,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     var dir = new CustomDirectory
                     {
                         Name = directory.FullName,
+                        ShortName = directory.FullName.Remove(0, directory.FullName.LastIndexOf('\\') + 1),
                         DateModified = directory.LastWriteTime,
                         Type = directory.GetType().ToString(),
                         Size = 0,

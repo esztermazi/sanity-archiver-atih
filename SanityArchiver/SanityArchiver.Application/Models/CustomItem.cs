@@ -8,6 +8,7 @@ namespace SanityArchiver.Application.Models
     public class CustomItem : INotifyPropertyChanged
     {
         private string _name;
+        private string _shortName;
         private DateTime _dateModified;
         private string _type;
         private int _size;
@@ -22,6 +23,16 @@ namespace SanityArchiver.Application.Models
             set
             {
                 _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ShortName
+        {
+            get => _shortName;
+            set
+            {
+                _shortName = value;
                 OnPropertyChanged();
             }
         }
