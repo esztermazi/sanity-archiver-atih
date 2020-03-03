@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SanityArchiver.DesktopUI.ViewModels
 {
-    class DriverController
+    public class DriverController
     {
 
         public ObservableCollection<CustomDriver> Drivers {get; set; }

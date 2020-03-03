@@ -23,9 +23,6 @@ namespace SanityArchiver.DesktopUI.Views
     {
         public ChildView()
         {
-            var itemProvider = new DirectoryController();
-            var items = itemProvider.GetItems(@"C:\");
-            DataContext = items;
             InitializeComponent();
         }
     }
