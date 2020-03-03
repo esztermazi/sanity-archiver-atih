@@ -15,9 +15,10 @@ namespace SanityArchiver.DesktopUI.ViewModels
 
             var dirinfo = new DirectoryInfo(path);
 
-            foreach (var directory in dirinfo.GetDirectories())
+
+            try
             {
-                try
+                foreach (var directory in dirinfo.GetDirectories())
                 {
                     var dir = new CustomDirectory
                     {
@@ -28,31 +29,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     };
 
                     CustomDirectory.Items.Add(dir);
-                }
-                catch (System.UnauthorizedAccessException)
-                {
-                    System.Console.WriteLine("Got Exception");
-                }
-
-                //foreach (var file in dirinfo.getfiles())
-                //{
-                //    try
-                //    {
-                //        var item = new customfile
-                //        {
-                //            name = file.name,
-                //            datemodified = file.lastwritetime,
-                //            type = file.gettype().tostring(),
-                //            size = 0,
-                //        };
-
-                //        items.add(item);
-                //    }
-                //    catch (system.unauthorizedaccessexception)
-                //    {
-                //        system.console.writeline("got exception");
-                //    }
-                //}
+                };
+            }
+            catch (System.UnauthorizedAccessException)
+            {
+                System.Console.WriteLine("Got Exception");
             }
         }
     }
