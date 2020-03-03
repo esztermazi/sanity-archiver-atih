@@ -60,8 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModels\ItemProvider.cs" />
-    <Compile Include="ViewModels\TreeViewProvider.cs" />
+    <Compile Include="ViewModels\DirectoryController.cs" />
+    <Compile Include="ViewModels\DriverController.cs" />
     <Compile Include="Views\ChildView.xaml.cs">
       <DependentUpon>ChildView.xaml</DependentUpon>
     </Compile>
