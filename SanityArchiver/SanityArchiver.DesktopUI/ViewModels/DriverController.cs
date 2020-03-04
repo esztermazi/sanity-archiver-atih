@@ -26,9 +26,10 @@ namespace SanityArchiver.DesktopUI.ViewModels
                 {
                     try
                     {
-                        var item = new CustomDriver
-                        {
-                            Name = driver.Name
+                    var item = new CustomDriver
+                    {
+                        Name = driver.Name,
+                        ShortName = driver.Name,
                         };
                         GetDirectories(item);
                         Drivers.Add(item);
