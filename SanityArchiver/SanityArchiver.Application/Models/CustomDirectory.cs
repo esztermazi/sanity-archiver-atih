@@ -9,11 +9,11 @@ namespace SanityArchiver.Application.Models
 {
     public class CustomDirectory : CustomItem
 	{ 
-		public ObservableCollection<CustomDirectory> Items { get; set; }
+		public ObservableCollection<CustomItem> Items { get; set; }
 
 		public CustomDirectory()
 		{
-			Items = new ObservableCollection<CustomDirectory>();
+			Items = new ObservableCollection<CustomItem>();
 		}
 	}
 }

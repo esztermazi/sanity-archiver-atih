@@ -11,10 +11,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
 
         public void GetCustomDirectories(string path)
         {
-            var items = new ObservableCollection<CustomDirectory>();
-
             var dirinfo = new DirectoryInfo(path);
-
 
             try
             {
@@ -28,8 +25,35 @@ namespace SanityArchiver.DesktopUI.ViewModels
                         Size = 0,
                     };
 
-                    CustomDirectory.Items.Add(dir);
-                };
+                    CustomDirectory.Items.Add((CustomItem)dir);
+                }
+                
+            }
+            catch (System.UnauthorizedAccessException)
+            {
+                System.Console.WriteLine("Got Exception");
+            }
+        }
+
+        public void GetCustomFiles(string path)
+        {
+            var dirinfo = new DirectoryInfo(path);
+
+            try
+            {
+                foreach (var customFile in dirinfo.GetFiles())
+                {
+                    var file = new CustomFile
+                    {
+                        Name = customFile.FullName,
+                        DateModified = customFile.LastWriteTime,
+                        Type = customFile.GetType().ToString(),
+                        Size = 0,
+                    };
+
+                    CustomDirectory.Items.Add((CustomItem)file);
+                }
+
             }
             catch (System.UnauthorizedAccessException)
             {

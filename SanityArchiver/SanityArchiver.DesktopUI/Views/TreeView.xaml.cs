@@ -1,6 +1,5 @@
 ﻿using SanityArchiver.Application.Models;
 using SanityArchiver.DesktopUI.ViewModels;
-using System.Windows.Navigation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
@@ -44,12 +43,12 @@ namespace SanityArchiver.DesktopUI.Views
                     CustomItemController.GetCustomDirectories(dir.Name);
                 }
             }
-            catch (System.InvalidCastException)
+            catch (InvalidCastException)
             {
                 CustomDirectory sourceItem = (CustomDirectory)source.Header;
                 foreach (var dir in sourceItem.Items)
                 {
-                    CustomItemController = new CustomItemController() { CustomDirectory = dir };
+                    CustomItemController = new CustomItemController() { CustomDirectory = (CustomDirectory)dir };
                     CustomItemController.GetCustomDirectories(dir.Name);
                 }
             }
@@ -58,12 +57,27 @@ namespace SanityArchiver.DesktopUI.Views
         private void OnItemSelected(object sender, RoutedEventArgs e)
         {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            CustomDirectory sourceItem = (CustomDirectory)source.Header;
             MainWindow mainWondow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             mainWondow.ctrChildView.MyDataGrid.Items.Clear();
-            foreach (var item in sourceItem.Items)
+            try
             {
-                mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
+                CustomDriver sourceItem = (CustomDriver)source.Header;
+                foreach (var item in sourceItem.Items)
+                {
+                    mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
+                }
+            }
+            catch (InvalidCastException)
+            {
+                CustomDirectory sourceItem = (CustomDirectory)source.Header;
+                CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
+                CustomItemController.GetCustomFiles(sourceItem.Name);
+                foreach (var item in sourceItem.Items)
+                {
+                    mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
+                }
+                sourceItem.Items.Clear();
+                CustomItemController.GetCustomDirectories(sourceItem.Name);
             }
         }
     }
