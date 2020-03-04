@@ -23,5 +23,15 @@ namespace SanityArchiver.DesktopUI.Views
         {
             InitializeComponent();
         }
+
+        private void SaveRename(object sender, RoutedEventArgs e)
+        {
+    
+        }
+
+        private void CancelRename(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

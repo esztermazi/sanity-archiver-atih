@@ -15,9 +15,12 @@ namespace SanityArchiver.DesktopUI.Views
     {
         public CustomDirectory CustomDirectory { get; set; }
 
+        public RenameModal RenameModal { get; set; }
+
         public ChildView()
         {
             CustomDirectory = new CustomDirectory();
+            RenameModal = new RenameModal();
             InitializeComponent();
         }
 
@@ -45,13 +48,13 @@ namespace SanityArchiver.DesktopUI.Views
             CustomDirectory customDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomDirectory;
             string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
             File.CreateText(newFilePath);
-            CustomItem item = new CustomItem { ShortName = @"New file.txt", DateModified = DateTime.Now, Type = Path.GetExtension(newFilePath) };
+            CustomItem item = new CustomItem { ShortName = @"New file.txt", DateModified = DateTime.Now, Type = Path.GetExtension(newFilePath), Size=0 };
             MyDataGrid.Items.Add(item);
         }
 
         private void RenameFile()
         {
-            MyDataGrid.SelectedItem = new TextBlock();
+            RenameModal.Show();
         }
 
         private void EscapePressed(object sender, KeyEventArgs e)
