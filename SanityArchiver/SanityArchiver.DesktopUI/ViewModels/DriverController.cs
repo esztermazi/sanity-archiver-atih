@@ -47,9 +47,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 foreach (var dir in Directory.GetDirectories(item.Name))
                 {
+                    var directoryInfo = new DirectoryInfo(dir);
                     item.Items.Add(new CustomDirectory { 
                         Name = dir,
-                        DateModified = new DirectoryInfo(dir).CreationTime,
+                        DateCreated = directoryInfo.CreationTime,
+                        Type = "File folder",
                     });
                 }
 

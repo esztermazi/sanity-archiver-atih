@@ -12,7 +12,7 @@
                               ItemsSource="{Binding Items}">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Name" Binding="{Binding ShortName}" Width="250"/>
-            <DataGridTextColumn Header="Date Modified" Binding="{Binding DateModified}"/>
+            <DataGridTextColumn Header="Date Created" Binding="{Binding DateCreated}"/>
             <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
             <DataGridTextColumn Header="Size" Binding="{Binding Size}"/>
         </DataGrid.Columns>

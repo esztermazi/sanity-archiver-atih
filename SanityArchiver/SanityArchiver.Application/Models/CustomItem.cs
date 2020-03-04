@@ -11,7 +11,7 @@ namespace SanityArchiver.Application.Models
         private string _shortName;
         private DateTime _dateModified;
         private string _type;
-        private int _size;
+        private string _size;
         private string _path;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,7 +38,7 @@ namespace SanityArchiver.Application.Models
         }
 
 
-        public DateTime DateModified
+        public DateTime DateCreated
         {
             get => _dateModified;
             set
@@ -58,7 +58,7 @@ namespace SanityArchiver.Application.Models
             }
         }
 
-        public int Size
+        public string Size
         {
             get => _size;
             set
