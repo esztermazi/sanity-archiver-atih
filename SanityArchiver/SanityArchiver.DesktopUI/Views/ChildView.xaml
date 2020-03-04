@@ -18,7 +18,7 @@
         </DataGrid.Columns>
         <DataGrid.ContextMenu>
             <ContextMenu x:Name="MyContextMenu">
-                <MenuItem x:Name ="MyMenuItem"/>
+                <MenuItem x:Name ="MyMenuItem" Click="Excetute_ContextMenuCommand"/>
             </ContextMenu>
         </DataGrid.ContextMenu>
     </DataGrid>
