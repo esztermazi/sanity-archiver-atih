@@ -21,7 +21,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     {
                         Name = directory.FullName,
                         ShortName = directory.FullName.Remove(0, directory.FullName.LastIndexOf('\\') + 1),
-                        DateModified = directory.LastWriteTime,
+                        DateModified = directory.CreationTime,
                         Type = directory.GetType().ToString(),
                         Size = 0,
                     };
