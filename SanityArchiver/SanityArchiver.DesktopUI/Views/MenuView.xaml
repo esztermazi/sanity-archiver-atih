@@ -8,25 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Menu>
         <MenuItem Header="_File">
-            <MenuItem Header="_New" />
-            <MenuItem Header="_Open" />
-            <MenuItem Header="_Save" />
+            <MenuItem Header="_Compress" />
+            <MenuItem Header="Encrypt" />
             <Separator />
             <MenuItem Header="_Exit" />
-        </MenuItem>
-        <MenuItem Header="_Home">
-            <MenuItem Header="_New" />
-            <MenuItem Header="_Open" />
-            <MenuItem Header="_Save" />
-            <Separator />
-            <MenuItem Header="_Exit" />
-        </MenuItem>
-        <MenuItem Header="_Share">
-            <MenuItem Header="_New" />
-            <MenuItem Header="_Open" />
-            <MenuItem Header="_Save" />
-            <Separator />
-            <MenuItem Header="_View" />
         </MenuItem>
     </Menu>
 </UserControl>
