@@ -11,7 +11,7 @@
                               IsReadOnly="True" GridLinesVisibility="None"
                               ItemsSource="{Binding Items}">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="250"/>
+            <DataGridTextColumn Header="Name" Binding="{Binding ShortName}" Width="250"/>
             <DataGridTextColumn Header="Date Modified" Binding="{Binding DateModified}"/>
             <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
             <DataGridTextColumn Header="Size" Binding="{Binding Size}"/>

@@ -75,6 +75,7 @@ namespace SanityArchiver.DesktopUI.Views
                 CustomItemController.GetCustomFiles(sourceItem.Name);
                 foreach (var item in sourceItem.Items)
                 {
+                    item.ShortName = item.Name.Remove(0, item.Name.LastIndexOf("\\") + 1);
                     mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
                 }
                 sourceItem.Items.Clear();
