@@ -39,6 +39,7 @@ namespace SanityArchiver.DesktopUI.Views
                 CustomDriver sourceItem = (CustomDriver)source.Header;
                 foreach (var dir in sourceItem.Items)
                 {
+                    dir.ShortName = dir.Name.Remove(0, dir.Name.LastIndexOf("\\")+1);
                     CustomItemController = new CustomItemController() { CustomDirectory = dir };
                     CustomItemController.GetCustomDirectories(dir.Name);
                 }

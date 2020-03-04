@@ -9,7 +9,7 @@
     <TreeView Name="trvMenu" TreeViewItem.Expanded="OnExpanded" TreeViewItem.Selected="OnItemSelected">
         <TreeView.ItemTemplate>
             <HierarchicalDataTemplate x:Name="Hierch" DataType="{x:Type self:CustomItem}" ItemsSource="{Binding Items}">
-                <TextBlock Text="{Binding Name}"/>
+                <TextBlock Text="{Binding ShortName}"/>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>
     </TreeView>
