@@ -1,4 +1,5 @@
-﻿using SanityArchiver.DesktopUI.ViewModels;
+﻿using SanityArchiver.Application.Models;
+using SanityArchiver.DesktopUI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,13 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class ChildView : UserControl
     {
+        public CustomDirectory CustomDirectory { get; set; }
+
         public ChildView()
         {
+            CustomDirectory = new CustomDirectory();
             InitializeComponent();
+           
         }
     }
 }

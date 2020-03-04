@@ -3,6 +3,8 @@ using SanityArchiver.DesktopUI.ViewModels;
 using System.Windows.Navigation;
 using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
+using System;
 
 namespace SanityArchiver.DesktopUI.Views
 {
@@ -12,7 +14,7 @@ namespace SanityArchiver.DesktopUI.Views
     public partial class TreeView : UserControl
 
     {
-       
+
         public DriverController DriverController { get; set; }
         public CustomItemController CustomItemController { get; set; }
 
@@ -27,7 +29,7 @@ namespace SanityArchiver.DesktopUI.Views
             {
                 trvMenu.Items.Add(drive);
             }
-            
+
         }
         private void OnExpanded(object sender, RoutedEventArgs e)
         {
@@ -51,8 +53,18 @@ namespace SanityArchiver.DesktopUI.Views
                     CustomItemController.GetCustomDirectories(dir.Name);
                 }
             }
-            
+        }
 
+        private void OnItemSelected(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem source = e.OriginalSource as TreeViewItem;
+            CustomDirectory sourceItem = (CustomDirectory)source.Header;
+            MainWindow mainWondow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWondow.ctrChildView.MyDataGrid.Items.Clear();
+            foreach (var item in sourceItem.Items)
+            {
+                mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
+            }
         }
     }
 }
