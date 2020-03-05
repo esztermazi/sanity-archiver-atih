@@ -1,9 +1,10 @@
 ﻿using SanityArchiver.Application.Models;
 using SanityArchiver.DesktopUI.ViewModels;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
-using System;
 
 namespace SanityArchiver.DesktopUI.Views
 {
@@ -14,72 +15,79 @@ namespace SanityArchiver.DesktopUI.Views
 
     {
 
-        public DriverController DriverController { get; set; }
+        public DriveController DriveController { get; set; }
         public CustomItemController CustomItemController { get; set; }
-
 
 
         public TreeView()
         {
 
+            DriveController = new DriveController();
+            DataContext = DriveController;
             InitializeComponent();
-            DriverController = new DriverController();
-            foreach (var drive in DriverController.Drivers)
-            {
-                trvMenu.Items.Add(drive);
-            }
-
         }
+
         private void OnExpanded(object sender, RoutedEventArgs e)
         {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
 
             try
             {
-                CustomDriver sourceItem = (CustomDriver)source.Header;
-                foreach (var dir in sourceItem.Items)
+                CustomDrive sourceItem = (CustomDrive)source.Header;
+                foreach (CustomDirectory dir in sourceItem.Items)
                 {
-                    dir.ShortName = dir.Name.Remove(0, dir.Name.LastIndexOf("\\")+1);
+                    dir.ShortName = dir.Name.Remove(0, dir.Name.LastIndexOf("\\") + 1);
                     CustomItemController = new CustomItemController() { CustomDirectory = dir };
                     CustomItemController.GetCustomDirectories(dir.Name);
                 }
             }
             catch (InvalidCastException)
             {
-                CustomDirectory sourceItem = (CustomDirectory)source.Header;
-                foreach (var dir in sourceItem.Items)
+                try
                 {
-                    CustomItemController = new CustomItemController() { CustomDirectory = (CustomDirectory)dir };
-                    CustomItemController.GetCustomDirectories(dir.Name);
+                    CustomDirectory sourceItem = (CustomDirectory)source.Header;
+                    foreach (var dir in sourceItem.Items)
+                    {
+                        if (dir.Type.Equals("File folder"))
+                        {
+                            CustomItemController = new CustomItemController() { CustomDirectory = (CustomDirectory)dir };
+                            CustomItemController.GetCustomDirectories(dir.Name);
+                        }
+                    }
                 }
+                catch (InvalidCastException) { }
             }
         }
 
         private void OnItemSelected(object sender, RoutedEventArgs e)
         {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
-            MainWindow mainWondow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            mainWondow.ctrChildView.MyDataGrid.Items.Clear();
+            MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             try
             {
-                CustomDriver sourceItem = (CustomDriver)source.Header;
+                CustomDrive sourceItem = (CustomDrive)source.Header;
+                mainWindow.ctrChildView.Custom.Items.Clear();
                 foreach (var item in sourceItem.Items)
                 {
-                    mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
+                    mainWindow.ctrChildView.Custom.Items.Add(item);
                 }
+                
+
             }
             catch (InvalidCastException)
             {
-                CustomDirectory sourceItem = (CustomDirectory)source.Header;
-                CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
-                CustomItemController.GetCustomFiles(sourceItem.Name);
-                foreach (var item in sourceItem.Items)
+                try
                 {
-                    item.ShortName = item.Name.Remove(0, item.Name.LastIndexOf("\\") + 1);
-                    mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
+                    CustomDirectory sourceItem = (CustomDirectory)source.Header;
+                    CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
+                    CustomItemController.GetCustomFiles(sourceItem.Name);
+                    mainWindow.ctrChildView.Custom.Items.Clear();
+                    foreach (var item in sourceItem.Items)
+                    {
+                        mainWindow.ctrChildView.Custom.Items.Add(item);
+                    }
                 }
-                sourceItem.Items.Clear();
-                CustomItemController.GetCustomDirectories(sourceItem.Name);
+                catch (InvalidCastException) { }
             }
         }
     }

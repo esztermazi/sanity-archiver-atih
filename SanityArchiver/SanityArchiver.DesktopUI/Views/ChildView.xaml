@@ -5,16 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SanityArchiver.DesktopUI.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" KeyDown="EscapePressed">
     <DataGrid x:Name="MyDataGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False" 
                               CanUserResizeRows="False" CanUserResizeColumns="True" Background="White"
-                              IsReadOnly="True" GridLinesVisibility="None"
-                              ItemsSource="{Binding Items}">
+                              IsReadOnly="True" GridLinesVisibility="None" MouseRightButtonDown="Set_ContextMenuContent"
+                              ItemsSource="{Binding Items}" >
         <DataGrid.Columns>
             <DataGridTextColumn Header="Name" Binding="{Binding ShortName}" Width="250"/>
             <DataGridTextColumn Header="Date Created" Binding="{Binding DateCreated}"/>
             <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
             <DataGridTextColumn Header="Size" Binding="{Binding Size}"/>
         </DataGrid.Columns>
+        <DataGrid.ContextMenu>
+            <ContextMenu x:Name="MyContextMenu">
+                <MenuItem x:Name ="MyMenuItem" Click="Excetute_ContextMenuCommand"/>
+            </ContextMenu>
+        </DataGrid.ContextMenu>
     </DataGrid>
 </UserControl>

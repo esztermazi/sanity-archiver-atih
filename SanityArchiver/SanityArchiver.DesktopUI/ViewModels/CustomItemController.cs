@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using SanityArchiver.Application.Models;
 using System.IO;
-using SanityArchiver.Application.Models;
 
 namespace SanityArchiver.DesktopUI.ViewModels
 {
@@ -28,7 +26,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
 
                     CustomDirectory.Items.Add(dir);
                 }
-                
+
             }
             catch (System.UnauthorizedAccessException)
             {
@@ -47,6 +45,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     var file = new CustomFile
                     {
                         Name = customFile.FullName,
+                        ShortName = customFile.FullName.Remove(0, customFile.FullName.LastIndexOf("\\") + 1),
                         DateCreated = customFile.LastWriteTime,
                         Type = Path.GetExtension(customFile.FullName),
                         Size = customFile.Length / 512 + " KB",
