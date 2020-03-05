@@ -59,7 +59,7 @@ namespace SanityArchiver.DesktopUI.Views
                 {
                     string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
                     File.CreateText(newFilePath);
-                    CustomItem item = new CustomItem { ShortName = @"New file.txt", DateModified = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = 0 };
+                    CustomItem item = new CustomItem { ShortName = @"New file.txt", DateCreated = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = "0" };
                     MyDataGrid.Items.Add(item);
                     customDirectory.Items.Add(item);
                 }

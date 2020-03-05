@@ -43,15 +43,19 @@ namespace SanityArchiver.DesktopUI.Views
             }
             catch (InvalidCastException)
             {
-                CustomDirectory sourceItem = (CustomDirectory)source.Header;
-                foreach (var dir in sourceItem.Items)
+                try
                 {
-                    if (dir.Type.Equals("File folder"))
+                    CustomDirectory sourceItem = (CustomDirectory)source.Header;
+                    foreach (var dir in sourceItem.Items)
                     {
-                        CustomItemController = new CustomItemController() { CustomDirectory = (CustomDirectory)dir };
-                        CustomItemController.GetCustomDirectories(dir.Name);
+                        if (dir.Type.Equals("File folder"))
+                        {
+                            CustomItemController = new CustomItemController() { CustomDirectory = (CustomDirectory)dir };
+                            CustomItemController.GetCustomDirectories(dir.Name);
+                        }
                     }
                 }
+                catch (InvalidCastException) { }
             }
         }
 
@@ -72,14 +76,18 @@ namespace SanityArchiver.DesktopUI.Views
             }
             catch (InvalidCastException)
             {
-                CustomDirectory sourceItem = (CustomDirectory)source.Header;
-                CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
-                CustomItemController.GetCustomFiles(sourceItem.Name);
-                mainWindow.ctrChildView.Custom.Items.Clear();
-                foreach (var item in sourceItem.Items)
+                try
                 {
-                    mainWindow.ctrChildView.Custom.Items.Add(item);
+                    CustomDirectory sourceItem = (CustomDirectory)source.Header;
+                    CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
+                    CustomItemController.GetCustomFiles(sourceItem.Name);
+                    mainWindow.ctrChildView.Custom.Items.Clear();
+                    foreach (var item in sourceItem.Items)
+                    {
+                        mainWindow.ctrChildView.Custom.Items.Add(item);
+                    }
                 }
+                catch (InvalidCastException) { }
             }
         }
     }
