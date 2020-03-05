@@ -3,13 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:self="clr-namespace:SanityArchiver.Application.Models;assembly=SanityArchiver.Application"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <TreeView Name="trvMenu" TreeViewItem.Expanded="OnExpanded" TreeViewItem.Selected="OnItemSelected" 
               ItemsSource="{Binding Items}" MouseRightButtonDown="trvMenu_MouseRightButtonDown">
         <TreeView.ItemTemplate>
-            <HierarchicalDataTemplate x:Name="Hierch" DataType="{x:Type self:CustomDrive}" ItemsSource="{Binding Items}">
+            <HierarchicalDataTemplate x:Name="Hierch" ItemsSource="{Binding Items}">
                 <TextBlock Text="{Binding ShortName}"/>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>

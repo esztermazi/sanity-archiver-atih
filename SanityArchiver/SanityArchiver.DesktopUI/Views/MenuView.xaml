@@ -11,7 +11,7 @@
             <MenuItem Header="_Compress" Click="Compress"/>
             <MenuItem Header="Encrypt" />
             <Separator />
-            <MenuItem Header="_Exit" />
+            <MenuItem Header="_Exit" Click="MenuItem_Click"/>
         </MenuItem>
     </Menu>
 </UserControl>
