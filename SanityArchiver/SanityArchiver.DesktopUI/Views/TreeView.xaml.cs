@@ -2,6 +2,7 @@
 using SanityArchiver.DesktopUI.ViewModels;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -88,6 +89,45 @@ namespace SanityArchiver.DesktopUI.Views
                     }
                 }
                 catch (InvalidCastException) { }
+            }
+        }
+
+        private void trvMenu_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            TreeViewMenuItem.Header = "Paste";
+        }
+
+        private void PasteIntoDir(object sender, RoutedEventArgs e)
+        {
+            CustomDirectory selectedDirectory = (CustomDirectory)trvMenu.SelectedItem;
+            MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            if (mainWindow.ctrChildView.type.Equals("file"))
+            {
+                string selectedFile = mainWindow.ctrChildView.selected;
+                string selectedFileName = Path.GetFileName(selectedFile);
+                string newPath = Path.Combine(selectedDirectory.Name, selectedFileName);
+                File.Copy(selectedFile, newPath);
+            }
+            else
+            {
+                //CopySubFolders(mainWindow.ctrChildView.Name, selectedDirectory.Name);
+            }
+        }
+
+        private void CopySubFolders(string sourceDirName, string destDirName)
+        {
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+            foreach (DirectoryInfo subdir in dirs)
+            {
+                string temppath = Path.Combine(destDirName, subdir.Name);
+                CopySubFolders(subdir.FullName, temppath);
             }
         }
     }

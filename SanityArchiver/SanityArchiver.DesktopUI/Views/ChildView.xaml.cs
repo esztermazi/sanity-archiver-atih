@@ -1,5 +1,6 @@
 ﻿using SanityArchiver.Application.Models;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -13,6 +14,8 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class ChildView : UserControl
     {
+        public string selected;
+        public string type;
         public CustomItemWithCollection Custom { get; set; } = new CustomItemWithCollection();
 
         public RenameModal RenameModal { get; set; }
@@ -26,10 +29,19 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void Set_ContextMenuContent(object sender, RoutedEventArgs e)
         {
-            if (MyDataGrid.SelectedItem == null) MyMenuItem.Header = "New Text File";
+            if (MyDataGrid.SelectedItem == null)
+            {
+                MyMenuItem.Header = "New Text File";
+                CopyMenuItem.Visibility = Visibility.Collapsed;
+                MoveMenuItem.Visibility = Visibility.Collapsed;
+            }
             else
             {
                 MyMenuItem.Header = "Rename";
+                CopyMenuItem.Header = "Copy";
+                CopyMenuItem.Visibility = Visibility.Visible;
+                MoveMenuItem.Header = "Move to...";
+                MoveMenuItem.Visibility = Visibility.Visible;
             }
         }
 
@@ -79,6 +91,24 @@ namespace SanityArchiver.DesktopUI.Views
         private void RenameFile()
         {
             RenameModal.Show();
+        }
+
+        public void Copy_item(object sender, RoutedEventArgs e)
+        {
+            CustomItem currentSelection = (CustomItem)MyDataGrid.SelectedItem;
+            if (!currentSelection.Type.Equals("File folder"))
+            {
+                CustomFile selectedFile = (CustomFile)MyDataGrid.SelectedItem;
+                selected = selectedFile.Name;
+                type = "file";
+            }
+            else
+            {
+                CustomDirectory selectedDirectory = (CustomDirectory)MyDataGrid.SelectedItem;
+                selected = selectedDirectory.Name;
+                type = "folder";
+            }
+            
         }
 
         private void EscapePressed(object sender, KeyEventArgs e)

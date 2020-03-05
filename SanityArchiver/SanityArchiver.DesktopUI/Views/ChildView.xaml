@@ -19,6 +19,8 @@
         <DataGrid.ContextMenu>
             <ContextMenu x:Name="MyContextMenu">
                 <MenuItem x:Name ="MyMenuItem" Click="Excetute_ContextMenuCommand"/>
+                <MenuItem Visibility="Visible" x:Name ="CopyMenuItem" Click="Copy_item"/>
+                <MenuItem Visibility="Visible" x:Name ="MoveMenuItem" Click="Excetute_ContextMenuCommand"/>
             </ContextMenu>
         </DataGrid.ContextMenu>
     </DataGrid>
