@@ -13,7 +13,6 @@ namespace SanityArchiver.DesktopUI.Views
     /// Interaction logic for TreeView.xaml
     /// </summary>
     public partial class TreeView : UserControl
-
     {
 
         public DriveController DriveController { get; set; }
@@ -22,7 +21,6 @@ namespace SanityArchiver.DesktopUI.Views
 
         public TreeView()
         {
-
             DriveController = new DriveController();
             DataContext = DriveController;
             InitializeComponent();

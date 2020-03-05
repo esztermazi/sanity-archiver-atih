@@ -16,13 +16,15 @@ namespace SanityArchiver.DesktopUI.Views
     {
         public string selected;
         public string type;
+        public bool RenameModalStatus { get; set; } = false; 
         public CustomItemWithCollection Custom { get; set; } = new CustomItemWithCollection();
 
-        public RenameModal RenameModal { get; set; }
+        public static RenameModal RenameModal { get; set; }
+
+
 
         public ChildView()
         {
-            RenameModal = new RenameModal();
             DataContext = Custom;
             InitializeComponent();
         }
@@ -60,9 +62,10 @@ namespace SanityArchiver.DesktopUI.Views
             try
             {
                 MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                CustomItemWithCollection sourceItem = Custom;
                 CustomDirectory customDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomDirectory;
                 bool isExist = false;
-                foreach (var file in customDirectory.Items)
+                foreach (var file in Custom.Items)
                 {
                     if (Path.GetFileNameWithoutExtension(file.Name).Equals("New file")) isExist = true;
                 }
@@ -72,8 +75,7 @@ namespace SanityArchiver.DesktopUI.Views
                     string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
                     File.CreateText(newFilePath);
                     CustomItem item = new CustomItem { ShortName = @"New file.txt", DateCreated = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = "0" };
-                    MyDataGrid.Items.Add(item);
-                    customDirectory.Items.Add(item);
+                    Custom.Items.Add(item);
                 }
                 else
                 {
@@ -84,13 +86,18 @@ namespace SanityArchiver.DesktopUI.Views
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Can not add files to drivers", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void RenameFile()
         {
-            RenameModal.Show();
+            if (!RenameModalStatus)
+            {
+                RenameModal = new RenameModal();
+                RenameModal.Show();
+                RenameModalStatus = true;
+            }
         }
 
         public void Copy_item(object sender, RoutedEventArgs e)

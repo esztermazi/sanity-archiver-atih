@@ -46,7 +46,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     {
                         Name = customFile.FullName,
                         ShortName = customFile.FullName.Remove(0, customFile.FullName.LastIndexOf("\\") + 1),
-                        DateCreated = customFile.LastWriteTime,
+                        DateCreated = customFile.CreationTime,
                         Type = Path.GetExtension(customFile.FullName),
                         Size = customFile.Length / 512 + " KB",
                     };
