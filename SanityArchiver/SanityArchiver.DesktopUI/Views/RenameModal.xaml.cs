@@ -39,9 +39,20 @@ namespace SanityArchiver.DesktopUI.Views
                     {
                         CustomItemWithCollection selectedDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomItemWithCollection;
                         bool isExists = false;
-                        isExists = IsFileNameTaken(selectedDirectory, isExists);
+                        foreach (var item in selectedDirectory.Items)
+                        {
+                            if (textField.Text.Equals(Path.GetFileNameWithoutExtension(item.Name)))
+                            {
+                                isExists = true;
+                                MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
                         if (!isExists)
-                            RenameSelectedFile(selectedFile);
+                        {
+                            File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
+                            selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
+                            selectedFile.Name = Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name);
+                        }
                     }
                     else MessageBox.Show("Can not rename this file/directory", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -50,27 +61,6 @@ namespace SanityArchiver.DesktopUI.Views
                     MessageBox.Show("File does not exist in current context", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-
-        private void RenameSelectedFile(CustomItem selectedFile)
-        {
-            File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
-            selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
-            selectedFile.Name = Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name);
-        }
-
-        private bool IsFileNameTaken(CustomItemWithCollection selectedDirectory, bool isExists)
-        {
-            foreach (var item in selectedDirectory.Items)
-            {
-                if (textField.Text.Equals(Path.GetFileNameWithoutExtension(item.Name)))
-                {
-                    isExists = true;
-                    MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-
-            return isExists;
         }
 
         private void CancelRename(object sender, RoutedEventArgs e)
