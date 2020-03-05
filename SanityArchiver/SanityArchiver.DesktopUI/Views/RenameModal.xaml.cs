@@ -1,18 +1,7 @@
 ﻿using SanityArchiver.Application.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Path = System.IO.Path;
 
 namespace SanityArchiver.DesktopUI.Views
@@ -35,7 +24,7 @@ namespace SanityArchiver.DesktopUI.Views
                 {
                     MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
                     CustomFile selectedFile = mainWindow.ctrChildView.MyDataGrid.SelectedItem as CustomFile;
-                    File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\"+ textField.Text + Path.GetExtension(selectedFile.Name));
+                    File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
                     selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
                     Close();
                 }

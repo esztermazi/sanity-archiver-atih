@@ -1,9 +1,9 @@
 ﻿using SanityArchiver.Application.Models;
 using SanityArchiver.DesktopUI.ViewModels;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
-using System;
 
 namespace SanityArchiver.DesktopUI.Views
 {
@@ -14,20 +14,18 @@ namespace SanityArchiver.DesktopUI.Views
 
     {
 
-        public DriverController DriverController { get; set; }
+        public DriveController DriveController { get; set; }
         public CustomItemController CustomItemController { get; set; }
 
 
         public TreeView()
         {
 
+            DriveController = new DriveController();
+            DataContext = DriveController;
             InitializeComponent();
-            DriverController = new DriverController();
-            foreach (var drive in DriverController.Drivers)
-            {
-                trvMenu.Items.Add(drive);
-            }
         }
+
         private void OnExpanded(object sender, RoutedEventArgs e)
         {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
@@ -37,7 +35,7 @@ namespace SanityArchiver.DesktopUI.Views
                 CustomDriver sourceItem = (CustomDriver)source.Header;
                 foreach (var dir in sourceItem.Items)
                 {
-                    dir.ShortName = dir.Name.Remove(0, dir.Name.LastIndexOf("\\")+1);
+                    dir.ShortName = dir.Name.Remove(0, dir.Name.LastIndexOf("\\") + 1);
                     CustomItemController = new CustomItemController() { CustomDirectory = dir };
                     CustomItemController.GetCustomDirectories(dir.Name);
                 }

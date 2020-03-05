@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace SanityArchiver.Application.Models
 {
@@ -12,8 +7,8 @@ namespace SanityArchiver.Application.Models
         public ObservableCollection<CustomDirectory> Items { get; set; }
 
         public CustomDriver()
-		{
-			Items = new ObservableCollection<CustomDirectory>();
-		}
-	}
+        {
+            Items = new ObservableCollection<CustomDirectory>();
+        }
+    }
 }

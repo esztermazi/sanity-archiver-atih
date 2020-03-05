@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using SanityArchiver.Application.Models;
 using System.IO;
-using SanityArchiver.Application.Models;
 
 namespace SanityArchiver.DesktopUI.ViewModels
 {
@@ -28,7 +26,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
 
                     CustomDirectory.Items.Add((CustomItem)dir);
                 }
-                
+
             }
             catch (System.UnauthorizedAccessException)
             {

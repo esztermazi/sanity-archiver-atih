@@ -1,45 +1,41 @@
 ﻿using SanityArchiver.Application.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SanityArchiver.DesktopUI.ViewModels
 {
-    public class DriverController
+    public class DriveController
     {
 
-        public ObservableCollection<CustomDriver> Drivers {get; set; }
+        public ObservableCollection<CustomDriver> Items { get; set; }
 
-        public DriverController()
+        public DriveController()
         {
+            Items = new ObservableCollection<CustomDriver>();
             GetItems();
         }
 
         public void GetItems()
+        {
+            Items.Clear();
+            foreach (var driver in DriveInfo.GetDrives())
             {
-            Drivers = new ObservableCollection<CustomDriver>();
-                foreach (var driver in DriveInfo.GetDrives())
+                try
                 {
-                    try
-                    {
                     var item = new CustomDriver
                     {
                         Name = driver.Name,
                         ShortName = driver.Name,
-                        };
-                        GetDirectories(item);
-                        Drivers.Add(item);
-                    }
-                    catch (System.UnauthorizedAccessException)
-                    {
-                        System.Console.WriteLine("Got Exception");
-                    }
+                    };
+                    GetDirectories(item);
+                    Items.Add(item);
+                }
+                catch (System.UnauthorizedAccessException)
+                {
+                    System.Console.WriteLine("Got Exception");
                 }
             }
+        }
 
         private void GetDirectories(CustomDriver item)
         {

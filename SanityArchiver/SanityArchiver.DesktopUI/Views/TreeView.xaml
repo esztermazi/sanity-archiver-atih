@@ -6,9 +6,9 @@
              xmlns:self="clr-namespace:SanityArchiver.Application.Models;assembly=SanityArchiver.Application"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TreeView Name="trvMenu" TreeViewItem.Expanded="OnExpanded" TreeViewItem.Selected="OnItemSelected">
+    <TreeView Name="trvMenu" TreeViewItem.Expanded="OnExpanded" TreeViewItem.Selected="OnItemSelected" ItemsSource="{Binding Items}">
         <TreeView.ItemTemplate>
-            <HierarchicalDataTemplate x:Name="Hierch" DataType="{x:Type self:CustomItem}" ItemsSource="{Binding Items}">
+            <HierarchicalDataTemplate x:Name="Hierch" DataType="{x:Type self:CustomDriver}" ItemsSource="{Binding Items}">
                 <TextBlock Text="{Binding ShortName}"/>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>

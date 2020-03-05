@@ -30,7 +30,7 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void Set_ContextMenuContent(object sender, RoutedEventArgs e)
         {
-            if (MyDataGrid.SelectedItem == null)MyMenuItem.Header = "New Text File";
+            if (MyDataGrid.SelectedItem == null) MyMenuItem.Header = "New Text File";
             else
             {
                 MyMenuItem.Header = "Rename";
@@ -41,7 +41,8 @@ namespace SanityArchiver.DesktopUI.Views
         {
             MenuItem menuItem = e.OriginalSource as MenuItem;
             if (menuItem.Header.Equals("New Text File")) AddFile();
-            else {
+            else
+            {
                 RenameFile();
             }
         }
@@ -55,7 +56,7 @@ namespace SanityArchiver.DesktopUI.Views
                 bool isExist = false;
                 foreach (var file in customDirectory.Items)
                 {
-                    if(Path.GetFileNameWithoutExtension(file.Name).Equals("New file")) isExist = true;
+                    if (Path.GetFileNameWithoutExtension(file.Name).Equals("New file")) isExist = true;
                 }
 
                 if (!isExist)
@@ -66,7 +67,7 @@ namespace SanityArchiver.DesktopUI.Views
                     MyDataGrid.Items.Add(item);
                     customDirectory.Items.Add(item);
                 }
-                else 
+                else
                 {
                     MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
