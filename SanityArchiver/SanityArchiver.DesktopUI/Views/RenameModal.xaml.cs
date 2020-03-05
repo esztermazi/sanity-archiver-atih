@@ -1,7 +1,9 @@
 ﻿using SanityArchiver.Application.Models;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Path = System.IO.Path;
 
 namespace SanityArchiver.DesktopUI.Views
@@ -11,12 +13,21 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class RenameModal : Window
     {
+        private MainWindow mW = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+
         public RenameModal()
         {
             InitializeComponent();
         }
 
         private void SaveRename(object sender, RoutedEventArgs e)
+        {
+            Rename();
+            mW.ctrChildView.RenameModalStatus = false;
+            Close();
+        }
+
+        private void Rename()
         {
             if (!string.IsNullOrEmpty(textField.Text))
             {
@@ -28,18 +39,18 @@ namespace SanityArchiver.DesktopUI.Views
                     bool isExists = false;
                     foreach (var item in selectedDirectory.Items)
                     {
-                        if (textField.Text.Equals(Path.GetFileNameWithoutExtension(item.Name))) 
+                        if (textField.Text.Equals(Path.GetFileNameWithoutExtension(item.Name)))
                         {
                             isExists = true;
                             MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
-                    if (!isExists) {
+                    if (!isExists)
+                    {
                         File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
                         selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
                         selectedFile.Name = Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name);
                     }
-                    Close();
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -50,7 +61,24 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void CancelRename(object sender, RoutedEventArgs e)
         {
+            mW.ctrChildView.RenameModalStatus = false;
             Close();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            mW.ctrChildView.RenameModalStatus = false;
+            base.OnClosed(e);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Rename();
+                mW.ctrChildView.RenameModalStatus = false;
+                Close();
+            }
         }
     }
 }

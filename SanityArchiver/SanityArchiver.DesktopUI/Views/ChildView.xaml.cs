@@ -13,6 +13,8 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class ChildView : UserControl
     {
+        public bool RenameModalStatus { get; set; } = false; 
+
         public CustomItemWithCollection Custom { get; set; } = new CustomItemWithCollection();
 
         public static RenameModal RenameModal { get; set; }
@@ -73,14 +75,18 @@ namespace SanityArchiver.DesktopUI.Views
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Can not add files to drivers", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void RenameFile()
         {
-            RenameModal = new RenameModal();
-            RenameModal.Show();
+            if (!RenameModalStatus)
+            {
+                RenameModal = new RenameModal();
+                RenameModal.Show();
+                RenameModalStatus = true;
+            }
         }
 
         private void EscapePressed(object sender, KeyEventArgs e)
