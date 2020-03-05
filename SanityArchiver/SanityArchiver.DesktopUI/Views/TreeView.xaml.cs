@@ -101,17 +101,18 @@ namespace SanityArchiver.DesktopUI.Views
         {
             CustomDirectory selectedDirectory = (CustomDirectory)trvMenu.SelectedItem;
             MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            if (mainWindow.ctrChildView.type.Equals("file"))
-            {
-                string selectedFile = mainWindow.ctrChildView.selected;
-                string selectedFileName = Path.GetFileName(selectedFile);
-                string newPath = Path.Combine(selectedDirectory.Name, selectedFileName);
-                File.Copy(selectedFile, newPath);
-            }
-            else
-            {
-                //CopySubFolders(mainWindow.ctrChildView.Name, selectedDirectory.Name);
-            }
+            string selectedFile = mainWindow.ctrChildView.selected;
+            string selectedFileName = Path.GetFileName(selectedFile);
+            string newPath = Path.Combine(selectedDirectory.Name, selectedFileName);
+            File.Copy(selectedFile, newPath);
+            mainWindow.ctrChildView.Custom.Items.Add(new CustomFile() 
+            { 
+                Name = selectedFile,
+                ShortName = selectedFileName,
+                Size = new FileInfo(selectedFile).Length / 512 + " KB",
+                Type = Path.GetExtension(selectedFile),
+                DateCreated = new FileInfo(selectedFile).CreationTime,
+            });
         }
 
         private void CopySubFolders(string sourceDirName, string destDirName)

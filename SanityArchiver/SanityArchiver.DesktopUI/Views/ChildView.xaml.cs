@@ -96,34 +96,23 @@ namespace SanityArchiver.DesktopUI.Views
         public void Copy_item(object sender, RoutedEventArgs e)
         {
             CustomItem currentSelection = (CustomItem)MyDataGrid.SelectedItem;
-            if (!currentSelection.Type.Equals("File folder"))
-            {
-                CustomFile selectedFile = (CustomFile)MyDataGrid.SelectedItem;
-                selected = selectedFile.Name;
-                type = "file";
-            }
-            else
-            {
-                CustomDirectory selectedDirectory = (CustomDirectory)MyDataGrid.SelectedItem;
-                selected = selectedDirectory.Name;
-                type = "folder";
-            }
-            
+            CustomFile selectedFile = (CustomFile)MyDataGrid.SelectedItem;
+            selected = selectedFile.Name;
+            type = "file";
         }
 
         private void Delete_item(object sender, RoutedEventArgs e)
         {
             CustomItem currentSelection = (CustomItem)MyDataGrid.SelectedItem;
             if (File.Exists(currentSelection.Name))
-            {
-                try
                 {
-                    File.Delete(currentSelection.Name);
+                    try
+                    {
+                        File.Delete(currentSelection.Name);
+                        Custom.Items.Remove(currentSelection);
+                    }
+                    catch (IOException) { }
                 }
-                catch (IOException)
-                {
-                }
-            }
         }
 
         private void EscapePressed(object sender, KeyEventArgs e)
