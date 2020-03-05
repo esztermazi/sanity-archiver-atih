@@ -33,15 +33,15 @@ namespace SanityArchiver.DesktopUI.Views
             {
                 MyMenuItem.Header = "New Text File";
                 CopyMenuItem.Visibility = Visibility.Collapsed;
-                MoveMenuItem.Visibility = Visibility.Collapsed;
+                DeleteMenuItem.Visibility = Visibility.Collapsed;
             }
             else
             {
                 MyMenuItem.Header = "Rename";
                 CopyMenuItem.Header = "Copy";
                 CopyMenuItem.Visibility = Visibility.Visible;
-                MoveMenuItem.Header = "Move to...";
-                MoveMenuItem.Visibility = Visibility.Visible;
+                DeleteMenuItem.Header = "Delete";
+                DeleteMenuItem.Visibility = Visibility.Visible;
             }
         }
 
@@ -109,6 +109,21 @@ namespace SanityArchiver.DesktopUI.Views
                 type = "folder";
             }
             
+        }
+
+        private void Delete_item(object sender, RoutedEventArgs e)
+        {
+            CustomItem currentSelection = (CustomItem)MyDataGrid.SelectedItem;
+            if (File.Exists(currentSelection.Name))
+            {
+                try
+                {
+                    File.Delete(currentSelection.Name);
+                }
+                catch (IOException)
+                {
+                }
+            }
         }
 
         private void EscapePressed(object sender, KeyEventArgs e)
