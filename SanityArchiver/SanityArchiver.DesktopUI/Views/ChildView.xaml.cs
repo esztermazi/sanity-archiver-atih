@@ -73,7 +73,7 @@ namespace SanityArchiver.DesktopUI.Views
                 {
                     string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
                     File.CreateText(newFilePath);
-                    CustomItem item = new CustomItem { Name = newFilePath, ShortName = @"New file.txt", DateCreated = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = "0 KB" };
+                    CustomFile item = new CustomFile { Name = newFilePath, ShortName = @"New file.txt", DateCreated = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = "0 KB" };
                     Custom.Items.Add(item);
                 }
                 else
