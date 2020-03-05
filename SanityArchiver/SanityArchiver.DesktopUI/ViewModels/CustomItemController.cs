@@ -19,12 +19,12 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     {
                         Name = directory.FullName,
                         ShortName = directory.FullName.Remove(0, directory.FullName.LastIndexOf('\\') + 1),
-                        DateModified = directory.LastWriteTime,
-                        Type = directory.GetType().ToString(),
-                        Size = 0,
+                        DateCreated = directory.CreationTime,
+                        Type = "File folder",
+                        Size = "",
                     };
 
-                    CustomDirectory.Items.Add((CustomItem)dir);
+                    CustomDirectory.Items.Add(dir);
                 }
 
             }
@@ -45,12 +45,12 @@ namespace SanityArchiver.DesktopUI.ViewModels
                     var file = new CustomFile
                     {
                         Name = customFile.FullName,
-                        DateModified = customFile.LastWriteTime,
-                        Type = customFile.GetType().ToString(),
-                        Size = 0,
+                        DateCreated = customFile.LastWriteTime,
+                        Type = Path.GetExtension(customFile.FullName),
+                        Size = customFile.Length / 512 + " KB",
                     };
 
-                    CustomDirectory.Items.Add((CustomItem)file);
+                    CustomDirectory.Items.Add(file);
                 }
 
             }
