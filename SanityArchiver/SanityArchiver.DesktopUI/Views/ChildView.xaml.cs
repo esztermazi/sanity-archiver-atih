@@ -15,11 +15,12 @@ namespace SanityArchiver.DesktopUI.Views
     {
         public CustomItemWithCollection Custom { get; set; } = new CustomItemWithCollection();
 
-        public RenameModal RenameModal { get; set; }
+        public static RenameModal RenameModal { get; set; }
+
+
 
         public ChildView()
         {
-            RenameModal = new RenameModal();
             DataContext = Custom;
             InitializeComponent();
         }
@@ -48,9 +49,10 @@ namespace SanityArchiver.DesktopUI.Views
             try
             {
                 MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                CustomItemWithCollection sourceItem = Custom;
                 CustomDirectory customDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomDirectory;
                 bool isExist = false;
-                foreach (var file in customDirectory.Items)
+                foreach (var file in Custom.Items)
                 {
                     if (Path.GetFileNameWithoutExtension(file.Name).Equals("New file")) isExist = true;
                 }
@@ -60,8 +62,7 @@ namespace SanityArchiver.DesktopUI.Views
                     string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
                     File.CreateText(newFilePath);
                     CustomItem item = new CustomItem { ShortName = @"New file.txt", DateCreated = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = "0" };
-                    MyDataGrid.Items.Add(item);
-                    customDirectory.Items.Add(item);
+                    Custom.Items.Add(item);
                 }
                 else
                 {
@@ -78,6 +79,7 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void RenameFile()
         {
+            RenameModal = new RenameModal();
             RenameModal.Show();
         }
 

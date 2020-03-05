@@ -20,7 +20,6 @@ namespace SanityArchiver.DesktopUI.Views
 
         public TreeView()
         {
-
             DriveController = new DriveController();
             DataContext = DriveController;
             InitializeComponent();
