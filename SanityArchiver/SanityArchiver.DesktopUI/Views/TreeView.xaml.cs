@@ -12,7 +12,6 @@ namespace SanityArchiver.DesktopUI.Views
     /// Interaction logic for TreeView.xaml
     /// </summary>
     public partial class TreeView : UserControl
-
     {
 
         public DriveController DriveController { get; set; }
