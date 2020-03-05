@@ -44,10 +44,13 @@ namespace SanityArchiver.DesktopUI.Views
             catch (InvalidCastException)
             {
                 CustomDirectory sourceItem = (CustomDirectory)source.Header;
-                foreach (CustomDirectory dir in sourceItem.Items)
+                foreach (var dir in sourceItem.Items)
                 {
-                    CustomItemController = new CustomItemController() { CustomDirectory = (CustomDirectory)dir };
-                    CustomItemController.GetCustomDirectories(dir.Name);
+                    if (dir.Type.Equals("File folder"))
+                    {
+                        CustomItemController = new CustomItemController() { CustomDirectory = (CustomDirectory)dir };
+                        CustomItemController.GetCustomDirectories(dir.Name);
+                    }
                 }
             }
         }
