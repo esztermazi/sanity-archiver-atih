@@ -79,11 +79,15 @@ namespace SanityArchiver.DesktopUI.Views
                 {
                     CustomDirectory sourceItem = (CustomDirectory)source.Header;
                     CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
-                    CustomItemController.GetCustomFiles(sourceItem.Name);
+                    var files = CustomItemController.GetCustomFiles(sourceItem.Name);
                     mainWindow.ctrChildView.Custom.Items.Clear();
                     foreach (var item in sourceItem.Items)
                     {
                         mainWindow.ctrChildView.Custom.Items.Add(item);
+                    }
+                    foreach (var file in files)
+                    {
+                        mainWindow.ctrChildView.Custom.Items.Add(file);
                     }
                 }
                 catch (InvalidCastException) { }
@@ -111,23 +115,6 @@ namespace SanityArchiver.DesktopUI.Views
                 Type = Path.GetExtension(selectedFile),
                 DateCreated = new FileInfo(selectedFile).CreationTime,
             });
-        }
-
-        private void CopySubFolders(string sourceDirName, string destDirName)
-        {
-            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
-            DirectoryInfo[] dirs = dir.GetDirectories();
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
-            }
-            foreach (DirectoryInfo subdir in dirs)
-            {
-                string temppath = Path.Combine(destDirName, subdir.Name);
-                CopySubFolders(subdir.FullName, temppath);
-            }
         }
     }
 }

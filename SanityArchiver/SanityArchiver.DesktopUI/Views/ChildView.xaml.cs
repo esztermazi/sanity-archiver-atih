@@ -15,7 +15,6 @@ namespace SanityArchiver.DesktopUI.Views
     public partial class ChildView : UserControl
     {
         public string selected;
-        public string type;
         public bool RenameModalStatus { get; set; } = false; 
         public CustomItemWithCollection Custom { get; set; } = new CustomItemWithCollection();
 
@@ -74,7 +73,7 @@ namespace SanityArchiver.DesktopUI.Views
                 {
                     string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
                     File.CreateText(newFilePath);
-                    CustomItem item = new CustomItem { ShortName = @"New file.txt", DateCreated = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = "0" };
+                    CustomItem item = new CustomItem { Name = newFilePath, ShortName = @"New file.txt", DateCreated = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = "0 KB" };
                     Custom.Items.Add(item);
                 }
                 else
@@ -100,16 +99,15 @@ namespace SanityArchiver.DesktopUI.Views
             }
         }
 
-        public void Copy_item(object sender, RoutedEventArgs e)
+        private void Copy_item(object sender, RoutedEventArgs e)
         {
-            CustomItem currentSelection = (CustomItem)MyDataGrid.SelectedItem;
             CustomFile selectedFile = (CustomFile)MyDataGrid.SelectedItem;
             selected = selectedFile.Name;
-            type = "file";
         }
 
         private void Delete_item(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             CustomItem currentSelection = (CustomItem)MyDataGrid.SelectedItem;
             if (File.Exists(currentSelection.Name))
                 {
@@ -117,6 +115,7 @@ namespace SanityArchiver.DesktopUI.Views
                     {
                         File.Delete(currentSelection.Name);
                         Custom.Items.Remove(currentSelection);
+                        //mainWindow.ctrTreeView.trvMenu.SelectedItem. Remove(currentSelection);
                     }
                     catch (IOException) { }
                 }

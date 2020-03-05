@@ -1,4 +1,5 @@
 ﻿using SanityArchiver.Application.Models;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace SanityArchiver.DesktopUI.ViewModels
@@ -34,8 +35,9 @@ namespace SanityArchiver.DesktopUI.ViewModels
             }
         }
 
-        public void GetCustomFiles(string path)
+        public ObservableCollection<CustomFile> GetCustomFiles(string path)
         {
+            ObservableCollection<CustomFile> customFiles = new ObservableCollection<CustomFile>();
             var dirinfo = new DirectoryInfo(path);
 
             try
@@ -51,7 +53,8 @@ namespace SanityArchiver.DesktopUI.ViewModels
                         Size = customFile.Length / 512 + " KB",
                     };
 
-                    CustomDirectory.Items.Add(file);
+                    //CustomDirectory.Items.Add(file);
+                    customFiles.Add(file);
                 }
 
             }
@@ -59,6 +62,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 System.Console.WriteLine("Got Exception");
             }
+            return customFiles;
         }
     }
 }
