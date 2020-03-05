@@ -34,27 +34,31 @@ namespace SanityArchiver.DesktopUI.Views
                 try
                 {
                     MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-                    CustomFile selectedFile = mainWindow.ctrChildView.MyDataGrid.SelectedItem as CustomFile;
-                    CustomItemWithCollection selectedDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomItemWithCollection;
-                    bool isExists = false;
-                    foreach (var item in selectedDirectory.Items)
+                    CustomItem selectedFile = mainWindow.ctrChildView.MyDataGrid.SelectedItem as CustomItem;
+                    if (!selectedFile.Type.Equals("File folder") && Path.GetExtension(selectedFile.Name).Equals(".txt"))
                     {
-                        if (textField.Text.Equals(Path.GetFileNameWithoutExtension(item.Name)))
+                        CustomItemWithCollection selectedDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomItemWithCollection;
+                        bool isExists = false;
+                        foreach (var item in selectedDirectory.Items)
                         {
-                            isExists = true;
-                            MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                            if (textField.Text.Equals(Path.GetFileNameWithoutExtension(item.Name)))
+                            {
+                                isExists = true;
+                                MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                        if (!isExists)
+                        {
+                            File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
+                            selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
+                            selectedFile.Name = Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name);
                         }
                     }
-                    if (!isExists)
-                    {
-                        File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
-                        selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
-                        selectedFile.Name = Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name);
-                    }
+                    else MessageBox.Show("Can not rename this file/directory", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                catch (FileNotFoundException ex)
+                catch (FileNotFoundException)
                 {
-                    MessageBox.Show(ex.Message, "File does not exist in current context", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("File does not exist in current context", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
