@@ -15,12 +15,16 @@ namespace SanityArchiver.DesktopUI.Views
     {
         public CustomDirectory CustomDirectory { get; set; }
 
+        public CustomDriver CustomDirver { get; set; }
+
         public RenameModal RenameModal { get; set; }
 
         public ChildView()
         {
             CustomDirectory = new CustomDirectory();
+            CustomDirver = new CustomDriver();
             RenameModal = new RenameModal();
+            DataContext = CustomDirectory;
             InitializeComponent();
         }
 
@@ -44,12 +48,35 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void AddFile()
         {
-            MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            CustomDirectory customDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomDirectory;
-            string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
-            File.CreateText(newFilePath);
-            CustomItem item = new CustomItem { ShortName = @"New file.txt", DateModified = DateTime.Now, Type = Path.GetExtension(newFilePath), Size=0 };
-            MyDataGrid.Items.Add(item);
+            try
+            {
+                MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                CustomDirectory customDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomDirectory;
+                bool isExist = false;
+                foreach (var file in customDirectory.Items)
+                {
+                    if(Path.GetFileNameWithoutExtension(file.Name).Equals("New file")) isExist = true;
+                }
+
+                if (!isExist)
+                {
+                    string newFilePath = $"{customDirectory.Name}" + @"\New file.txt";
+                    File.CreateText(newFilePath);
+                    CustomItem item = new CustomItem { ShortName = @"New file.txt", DateModified = DateTime.Now, Type = Path.GetExtension(newFilePath), Size = 0 };
+                    MyDataGrid.Items.Add(item);
+                    customDirectory.Items.Add(item);
+                }
+                else 
+                {
+                    MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                isExist = false;
+
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Can not add files to drivers", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void RenameFile()

@@ -18,7 +18,6 @@ namespace SanityArchiver.DesktopUI.Views
         public CustomItemController CustomItemController { get; set; }
 
 
-
         public TreeView()
         {
 
@@ -28,7 +27,6 @@ namespace SanityArchiver.DesktopUI.Views
             {
                 trvMenu.Items.Add(drive);
             }
-
         }
         private void OnExpanded(object sender, RoutedEventArgs e)
         {
@@ -59,27 +57,27 @@ namespace SanityArchiver.DesktopUI.Views
         {
             TreeViewItem source = e.OriginalSource as TreeViewItem;
             MainWindow mainWondow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
-            mainWondow.ctrChildView.MyDataGrid.Items.Clear();
             try
             {
                 CustomDriver sourceItem = (CustomDriver)source.Header;
-                foreach (var item in sourceItem.Items)
-                {
-                    mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
-                }
+                mainWondow.ctrChildView.CustomDirver.Items = sourceItem.Items;
+                mainWondow.ctrChildView.MyDataGrid.Items.Refresh();
             }
             catch (InvalidCastException)
             {
-                CustomDirectory sourceItem = (CustomDirectory)source.Header;
-                CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
-                CustomItemController.GetCustomFiles(sourceItem.Name);
-                foreach (var item in sourceItem.Items)
+                try
                 {
-                    item.ShortName = item.Name.Remove(0, item.Name.LastIndexOf("\\") + 1);
-                    mainWondow.ctrChildView.MyDataGrid.Items.Add(item);
+                    CustomDirectory sourceItem = (CustomDirectory)source.Header;
+                    CustomItemController = new CustomItemController() { CustomDirectory = sourceItem };
+                    CustomItemController.GetCustomFiles(sourceItem.Name);
+                    mainWondow.ctrChildView.CustomDirectory.Items = sourceItem.Items;
+                    mainWondow.ctrChildView.MyDataGrid.Items.Refresh();
+
                 }
-                sourceItem.Items.Clear();
-                CustomItemController.GetCustomDirectories(sourceItem.Name);
+                catch (InvalidCastException)
+                {
+
+                }
             }
         }
     }

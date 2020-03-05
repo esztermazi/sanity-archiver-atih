@@ -39,7 +39,7 @@ namespace SanityArchiver.DesktopUI.Views
                     selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
                     Close();
                 }
-                catch (Exception ex)
+                catch (FileNotFoundException ex)
                 {
                     MessageBox.Show(ex.Message, "File does not exist in current context", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -48,7 +48,7 @@ namespace SanityArchiver.DesktopUI.Views
 
         private void CancelRename(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
     }
 }
