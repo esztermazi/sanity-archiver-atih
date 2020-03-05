@@ -24,8 +24,21 @@ namespace SanityArchiver.DesktopUI.Views
                 {
                     MainWindow mainWindow = System.Windows.Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
                     CustomFile selectedFile = mainWindow.ctrChildView.MyDataGrid.SelectedItem as CustomFile;
-                    File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
-                    selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
+                    CustomItemWithCollection selectedDirectory = mainWindow.ctrTreeView.trvMenu.SelectedItem as CustomItemWithCollection;
+                    bool isExists = false;
+                    foreach (var item in selectedDirectory.Items)
+                    {
+                        if (textField.Text.Equals(Path.GetFileNameWithoutExtension(item.Name))) 
+                        {
+                            isExists = true;
+                            MessageBox.Show("File name already exist", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    if (!isExists) {
+                        File.Move(selectedFile.Name, Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name));
+                        selectedFile.ShortName = textField.Text + Path.GetExtension(selectedFile.Name);
+                        selectedFile.Name = Path.GetDirectoryName(selectedFile.Name) + @"\" + textField.Text + Path.GetExtension(selectedFile.Name);
+                    }
                     Close();
                 }
                 catch (FileNotFoundException ex)
