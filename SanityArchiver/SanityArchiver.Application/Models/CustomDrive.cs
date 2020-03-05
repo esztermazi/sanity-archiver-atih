@@ -2,7 +2,8 @@
 
 namespace SanityArchiver.Application.Models
 {
-    public class CustomDirectory : CustomItemWithCollection
+    public class CustomDrive : CustomItemWithCollection
     {
+
     }
 }

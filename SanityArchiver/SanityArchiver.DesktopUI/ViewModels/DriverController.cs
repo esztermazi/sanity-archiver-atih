@@ -7,11 +7,11 @@ namespace SanityArchiver.DesktopUI.ViewModels
     public class DriveController
     {
 
-        public ObservableCollection<CustomDriver> Items { get; set; }
+        public ObservableCollection<CustomDrive> Items { get; set; }
 
         public DriveController()
         {
-            Items = new ObservableCollection<CustomDriver>();
+            Items = new ObservableCollection<CustomDrive>();
             GetItems();
         }
 
@@ -22,7 +22,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             {
                 try
                 {
-                    var item = new CustomDriver
+                    var item = new CustomDrive
                     {
                         Name = driver.Name,
                         ShortName = driver.Name,
@@ -37,7 +37,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
             }
         }
 
-        private void GetDirectories(CustomDriver item)
+        private void GetDirectories(CustomDrive item)
         {
             try
             {

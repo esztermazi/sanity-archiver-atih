@@ -9,7 +9,7 @@
     <DataGrid x:Name="MyDataGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" AutoGenerateColumns="False" 
                               CanUserResizeRows="False" CanUserResizeColumns="True" Background="White"
                               IsReadOnly="True" GridLinesVisibility="None" MouseRightButtonDown="Set_ContextMenuContent"
-                              ItemsSource="{Binding Items}">
+                              ItemsSource="{Binding Items}" >
         <DataGrid.Columns>
             <DataGridTextColumn Header="Name" Binding="{Binding ShortName}" Width="250"/>
             <DataGridTextColumn Header="Date Modified" Binding="{Binding DateModified}"/>

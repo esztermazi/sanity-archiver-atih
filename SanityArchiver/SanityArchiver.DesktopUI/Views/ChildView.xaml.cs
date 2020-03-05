@@ -13,18 +13,14 @@ namespace SanityArchiver.DesktopUI.Views
     /// </summary>
     public partial class ChildView : UserControl
     {
-        public CustomDirectory CustomDirectory { get; set; }
-
-        public CustomDriver CustomDirver { get; set; }
+        public CustomItemWithCollection Custom { get; set; } = new CustomItemWithCollection();
 
         public RenameModal RenameModal { get; set; }
 
         public ChildView()
         {
-            CustomDirectory = new CustomDirectory();
-            CustomDirver = new CustomDriver();
             RenameModal = new RenameModal();
-            DataContext = CustomDirectory;
+            DataContext = Custom;
             InitializeComponent();
         }
 

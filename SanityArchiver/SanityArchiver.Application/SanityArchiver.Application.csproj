@@ -55,9 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CustomDirectory.cs" />
-    <Compile Include="Models\CustomDriver.cs" />
+    <Compile Include="Models\CustomDrive.cs" />
     <Compile Include="Models\CustomFile.cs" />
     <Compile Include="Models\CustomItem.cs" />
+    <Compile Include="Models\CustomItemWithCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
