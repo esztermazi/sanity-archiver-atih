@@ -12,6 +12,7 @@ namespace SanityArchiver.DesktopUI.ViewModels
         {
             var dirinfo = new DirectoryInfo(path);
 
+            CustomDirectory.Items.Clear();
             try
             {
                 foreach (var directory in dirinfo.GetDirectories())
